@@ -1,0 +1,38 @@
+version: "3.7"
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - 8000:80 # change host access port number
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./Bulletin:/var/www/html # need to change project folder name
+    depends_on:
+      - php-fpm
+
+  php-fpm:
+    build:
+      context: ./php-fpm
+      target: dev
+    volumes:
+      - ./php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      - ./Bulletin:/var/www/html # need to change project folder name
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    ports:
+      - 3306:3306 # change host access port number
+    environment:
+      MYSQL_ROOT_PASSWORD: rootPass
+      MYSQL_USER: user # need to be same with "DB_USERNAME" of .env
+      MYSQL_PASSWORD: password # need to be same with "DB_PASSWORD" of .env
+      MYSQL_DATABASE: bulletinboard # need to be same with "DB_DATABASE" of .env
+    volumes:
+      - ./mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
