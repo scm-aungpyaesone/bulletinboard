@@ -29,10 +29,13 @@ jobs:
     steps:
       - checkout:
           path: ~/bulletinboard
-      - run: sudo apt-get update
-      - run: sudo docker-php-ext-install pdo pdo_mysql
-      - run: sudo docker-php-ext-configure gd
-      - run: sudo docker-php-ext-install gd
+      - run: sudo apt-get update -y
+      - run: sudo apt-get install -y libpng-dev libjpeg-dev zip unzip git
+      - run: sudo rm -rf /var/lib/apt/lists/*
+      - run: sudo docker-php-ext-install zip
+      - run: sudo docker-php-ext-configure gd --with-jpeg-dir=/usr/lib/x86_64-linux-gnu/
+      - run: sudo docker-php-ext-install pdo pdo_mysql gd mbstring zip
+      - run: sudo composer self-update
       
       # Download and cache dependencies
       - restore_cache:
