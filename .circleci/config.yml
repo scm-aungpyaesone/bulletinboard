@@ -30,7 +30,6 @@ jobs:
           path: ~/bulletinboard
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo -E docker-php-ext-install pdo_mysql
-      - run: composer install -n --prefer-dist
       
       # Download and cache dependencies
       - restore_cache:
@@ -40,9 +39,26 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
+      - run:
+          name: "Install Dependencies"
+          command: composer install -n --prefer-dist
+
+      - save_cache:
+          key: v1-dependencies-{{ checksum "composer.json" }}
+          paths:
+            - ./vendor
+
       # prepare the database
-      - run: php artisan migrate --force
-      - run: php artisan db:seed --force
+      - run:
+          name: "Create Environment file and generate app key"
+          command: |
+            mv .env.testing .env
+            php artisan key:generate
+
+      - run:
+          name: "Create database and run migration"
+          command: |
+            php artisan migrate --env=testing
 
       # run tests with phpunit
       - run:
