@@ -30,7 +30,8 @@ jobs:
       - checkout:
           path: ~/bulletinboard
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
-      - run: sudo -E docker-php-ext-install pdo_mysql php-gd
+      - run: sudo -E docker-php-ext-install pdo_mysql
+      - run: sudo -E docker-php-ext-install php-gd
       
       # Download and cache dependencies
       - restore_cache:
