@@ -9,6 +9,7 @@ jobs:
       # Specify the version you desire here
       - image: circleci/php:7.3-fpm
       - image: circleci/mysql:latest
+        command: [--default-authentication-plugin=mysql_native_password]
         environment:
           MYSQL_DATABASE: bulletinboard # need to be same with "DB_DATABASE" of .env
           MYSQL_ALLOW_EMPTY_PASSWORD: true
