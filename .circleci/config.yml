@@ -14,7 +14,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: rootPass
           MYSQL_USER: user # need to be same with "DB_USERNAME" of .env
           MYSQL_PASSWORD: password # need to be same with "DB_PASSWORD" of .env
-          MYSQL_DATABASE: bulletinboard # need to be same with "DB_DATABASE" of .env
+          MYSQL_DATABASE: test_bulletinboard # need to be same with "DB_DATABASE" of .env
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
