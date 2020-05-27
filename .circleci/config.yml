@@ -29,10 +29,7 @@ jobs:
     steps:
       - checkout:
           path: ~/bulletinboard
-      - run: sudo apt-get update && sudo apt-get install -y \
-                libfreetype6-dev \
-                libjpeg62-turbo-dev \
-                libpng-dev
+      - run: sudo apt-get update
       - run: sudo docker-php-ext-install pdo pdo_mysql
       - run: sudo docker-php-ext-configure gd --with-freetype --with-jpeg
       - run: sudo docker-php-ext-install -j$(nproc) gd
