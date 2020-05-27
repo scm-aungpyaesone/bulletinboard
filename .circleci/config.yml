@@ -41,8 +41,8 @@ jobs:
             - v1-dependencies-
 
       # prepare the database
-      - run: php artisan migrate
-      - run: php artisan db:seed
+      - run: php artisan migrate --force
+      - run: php artisan db:seed --force
 
       # run tests with phpunit
       - run:
