@@ -23,7 +23,7 @@ class UserTest extends TestCase
   }
 
   /**
-   * This is to tear down functions after sunning test cases.
+   * This is to tear down functions after running test cases.
    * @return void
    */
   public function tearDown(): void {
