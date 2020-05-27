@@ -23,7 +23,7 @@ jobs:
       #
       # - image: redis:2.8.19
 
-    working_directory: ~/bulletinboard
+    working_directory: ~/bulletinboard/Bulletin
 
     steps:
       - checkout
