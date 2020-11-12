@@ -43,7 +43,7 @@
     ``` .\scripts\bat\composer_update_install.bat ```
 
 3. Generate key.  
-    ``` .\scripts\bat\artisan_generate_key.bat ``` 
+    ``` .\scripts\bat\artisan_key_generate.bat ``` 
 
 4. Create tables.
     ``` .\scripts\bat\artisan_migrate_seed.bat ``` 
