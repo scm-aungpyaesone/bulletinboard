@@ -6,6 +6,7 @@ branch-defaults:
 global:
   application_name: laravel-app
   branch: null
+  default_ec2_keyname: LaravelApp
   default_platform: Docker 18.06.1-ce
   default_region: ap-southeast-1
   include_git_submodules: true

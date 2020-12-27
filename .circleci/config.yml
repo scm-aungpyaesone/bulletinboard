@@ -124,6 +124,7 @@ jobs:
             export SHA1=$(echo ${CIRCLE_SHA1} | cut -c1-7)
             echo "${CIRCLE_BRANCH}" ; echo "${EB_ENV}" ; echo  "${SHA1}"
             cd Bulletin
+            sed -i -e "s/changeme/$SHA1/" Dockerrun.aws.json
             git add Dockerrun.aws.json
             git rm Dockerfile
             ~/eb_deploy_and_notify.sh ${EB_ENV} --staged
@@ -132,15 +133,15 @@ workflows:
   version: 2
   test-build-deploy:
     jobs:
-      # - test
-      # - build_and_push:
-      #     requires:
-      #       - test
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
-      #           - develop
+      - test
+      - build_and_push:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - master
+                - develop
       - deploy:
           filters:
             branches:

@@ -1,7 +1,7 @@
 {
     "AWSEBDockerrunVersion": "1",
     "Image": {
-      "Name": "041488479680.dkr.ecr.ap-southeast-1.amazonaws.com/bulletinboard:b521233"
+      "Name": "041488479680.dkr.ecr.ap-southeast-1.amazonaws.com/bulletinboard:changeme"
     },
     "Ports": [
       {
