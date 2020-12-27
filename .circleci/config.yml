@@ -143,6 +143,8 @@ workflows:
                 - master
                 - develop
       - deploy:
+          requires:
+            - build_and_push
           filters:
             branches:
               only:
