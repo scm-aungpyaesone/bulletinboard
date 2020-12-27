@@ -1,0 +1,18 @@
+branch-defaults:
+  develop:
+    environment: LaravelApp-env
+  master:
+    environment: LaravelApp-env
+global:
+  application_name: laravel-app
+  branch: null
+  default_platform: Docker 18.06.1-ce
+  default_region: ap-southeast-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: null
+  repository: null
+  sc: git
+  workspace_type: Application

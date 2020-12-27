@@ -123,6 +123,11 @@ jobs:
             export EB_ENV=`eb list | grep '*' | awk '{print $2}'`
             export SHA1=$(echo ${CIRCLE_SHA1} | cut -c1-7)
             echo "${CIRCLE_BRANCH}" ; echo "${EB_ENV}" ; echo  "${SHA1}"
+            cd Bulletin
+            git add Dockerrun.aws.json
+            git rm Dockerfile
+            ~/eb_deploy_and_notify.sh ${EB_ENV} --staged
+          no_output_timeout: 15m
 workflows:
   version: 2
   test-build-deploy:
