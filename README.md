@@ -22,4 +22,5 @@
 1. `php artisan key:generate`
 1. `php artisan migrete --seed`
 1. `php artisan storage:link`
+1. `php artisan passport:install`
 1. `cd storage && chown -R www-data:www-data *`

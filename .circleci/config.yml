@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  test:
     docker:
       # Specify the version you desire here
       - image: circleci/php:7.3-fpm
@@ -70,3 +70,50 @@ jobs:
       - run:
           name: "Run Tests"
           command: ./vendor/bin/phpunit
+  build_and_push:
+    docker:
+      - image: docker:18.06.1-ce-git
+        environment:
+          DOCKER_IMAGE: php-fpm
+          APP: bulletinboard
+    working_directory: ~/work
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 18.06.0-ce
+          docker_layer_caching: true
+      - run:
+          name: Install requirements
+          command: |
+            apk add --no-cache py-pip bash
+            pip install awscli
+      - run:
+          name: docker build
+          command: |
+            docker build -t $DOCKER_IMAGE --no-cache Bulletin/.
+      - run:
+          name: push builds
+          shell: /bin/bash
+          command: |
+            set -e
+            eval $(aws --region ap-northeast-1 ecr get-login --no-include-email)
+            export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --output text | awk '{print $1}')
+            export SHA1=$(echo ${CIRCLE_SHA1} | cut -c1-7)
+            docker images
+            docker tag $DOCKER_IMAGE:latest $AWS_ACCOUNT_ID.dkr.ecr.ap-southeast-1.amazonaws.com/$APP:$SHA1
+            docker tag $DOCKER_IMAGE:latest $AWS_ACCOUNT_ID.dkr.ecr.ap-southeast-1.amazonaws.com/$APP:$CIRCLE_BRANCH
+            time docker push $AWS_ACCOUNT_ID.dkr.ecr.ap-southeast-1.amazonaws.com/$APP:$SHA1
+            time docker push $AWS_ACCOUNT_ID.dkr.ecr.ap-southeast-1.amazonaws.com/$APP:$CIRCLE_BRANCH
+workflows:
+  version: 2
+  test-build-deploy:
+    jobs:
+      - test
+      - build_and_push:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - master
+                - develop
