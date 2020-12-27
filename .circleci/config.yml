@@ -134,19 +134,19 @@ workflows:
   test-build-deploy:
     jobs:
       - test
-      - build_and_push:
-          requires:
-            - test
-          filters:
-            branches:
-              only:
-                - master
-                - develop
-      - deploy:
-          requires:
-            - build_and_push
-          filters:
-            branches:
-              only:
-                - master
-                - develop
+      # - build_and_push:
+      #     requires:
+      #       - test
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
+      #           - develop
+      # - deploy:
+      #     requires:
+      #       - build_and_push
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
+      #           - develop
