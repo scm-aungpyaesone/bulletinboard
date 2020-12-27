@@ -111,6 +111,7 @@ jobs:
       - run:
           name: Install deploy tools
           command: |
+            sudo pip install awscli
             sudo pip install awsebcli==3.14.6
             wget http://bit.ly/eb_deploy_and_notify_sh -O ~/eb_deploy_and_notify.sh
             chmod +x ~/eb_deploy_and_notify.sh
@@ -119,6 +120,7 @@ jobs:
           shell: /bin/bash
           command: |
             set -e
+            eval $(aws --region ap-southeast-1 ecr get-login --no-include-email)
             eb --version
             export EB_ENV=`eb list | grep '*' | awk '{print $2}'`
             export SHA1=$(echo ${CIRCLE_SHA1} | cut -c1-7)
