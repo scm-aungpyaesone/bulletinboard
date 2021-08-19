@@ -1,0 +1,23 @@
+name: CD for Staging
+
+on:
+  push:
+    branches: [staging]
+  pull_request:
+    branches: [staging]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Deploy to Staging Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_STAGING_HOST }}
+          username: ${{ secrets.SSH_STAGING_USERNAME }}
+          key: ${{ secrets.SSH_STAGING_KEY }}
+          port: 22
+          script: |
+            cd /home/ec2-user/work/projects/bulletinboard && ls -l
