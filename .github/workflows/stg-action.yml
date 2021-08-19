@@ -2,9 +2,9 @@ name: CD for Staging
 
 on:
   push:
-    branches: [staging]
+    branches: [develop]
   pull_request:
-    branches: [staging]
+    branches: [develop]
 
 jobs:
   deploy:
